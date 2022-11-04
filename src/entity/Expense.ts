@@ -8,13 +8,16 @@ export class Expense {
 
     @Column()
     place: string
+    
+    @Column()
+    itemName: string
 
     @Column()
-    amount: number
-
-    @Column()
-    item: number
+    price: number
 
     @Column({ default: 1 })
     quantity: number    
+
+    @Column()
+    totalPaid: number
 }
