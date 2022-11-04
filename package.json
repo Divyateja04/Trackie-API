@@ -1,17 +1,24 @@
 {
-  "name": "trackie-api",
-  "version": "1.0.0",
-  "description": "A Server App made for CGPA and Expenses :)",
-  "main": "index.js",
-  "scripts": {
-    "start": "ts-node src/index.ts",
-    "watch": "tsc -w",
-    "dev": "nodemon dist/index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^18.11.9",
-    "typescript": "^4.8.4"
-  }
+   "name": "trackie-api",
+   "version": "1.0.0",
+   "description": "A Server App made for CGPA and Expenses :)",
+   "main": "index.js",
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "watch": "tsc -w",
+      "dev": "nodemon dist/index.js",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "author": "",
+   "license": "ISC",
+   "devDependencies": {
+      "@types/node": "^16.11.10",
+      "typescript": "4.5.2",
+      "ts-node": "10.7.0"
+   },
+   "dependencies": {
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.3.10"
+   }
 }
