@@ -1,22 +1,26 @@
+import "reflect-metadata";
 import express from 'express';
-import { AppDataSource } from "./data-source"
+import { db } from "./data-source"
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
 import { ExpenseResolver } from './resolvers/expense.resolver';
 
-import chalk from 'chalk';
-
 import { PORT } from './constants';
 
-AppDataSource.initialize()
-    .then(async () => {
+import colors from 'colors';
+
+db.initialize()
+.then(async () => {        
         const app = express();
 
         const apolloServer = new ApolloServer({
             schema: await buildSchema({
                 resolvers: [ExpenseResolver],
                 validate: false
+            }),
+            context: () => ({
+                db: db
             })
         });
 
@@ -26,7 +30,7 @@ AppDataSource.initialize()
         })
 
         app.listen(PORT, () => {
-            console.log(chalk.blue(`Server is running on PORT ${PORT}`));
+            console.log(colors.blue(`Server is running on PORT ${PORT}`));
         });
 
-    }).catch(error => console.log("DB::>", error))
+    }).catch(error => console.log(colors.red("DB::>" +  error.details)))
