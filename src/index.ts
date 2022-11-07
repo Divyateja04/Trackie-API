@@ -5,6 +5,8 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
 import { ExpenseResolver } from './resolvers/expense.resolver';
+import { SubjectResolver } from './resolvers/subject.resolver';
+import { MonthlyExpensesResolver } from './resolvers/monthlyexpenses.resolver';
 
 import { PORT } from './constants';
 
@@ -16,7 +18,7 @@ db.initialize()
 
         const apolloServer = new ApolloServer({
             schema: await buildSchema({
-                resolvers: [ExpenseResolver],
+                resolvers: [ExpenseResolver, SubjectResolver, MonthlyExpensesResolver],
                 validate: false
             }),
             context: () => ({
@@ -33,4 +35,4 @@ db.initialize()
             console.log(colors.blue(`Server is running on PORT ${PORT}`));
         });
 
-    }).catch(error => console.log(colors.red("DB::>" +  error.details)))
+    }).catch(error => console.log(colors.red("DB::>" +  error)))

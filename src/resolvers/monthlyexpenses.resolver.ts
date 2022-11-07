@@ -4,28 +4,7 @@ import { MonthlyExpenses } from './../entity/MonthlyExpenses';
 import { Expense } from './../entity/Expense';
 
 @Resolver()
-export class MonthlyExpensesResolver {
-    /**
-     * 
-     * @param month the month for which you need the monthly expense
-     * @param year the year for which you need the monthly expense
-     * @returns the row containing the monthly expense details for a month
-     */
-    @Mutation(() => MonthlyExpenses)
-    async getMonthlyExpense(
-        @Arg("month") month: number,
-        @Arg("year") year: number,
-        @Ctx() { db }: Context
-    ): Promise<MonthlyExpenses | null> {
-        const monthlyExpenses = await db.manager.findOne(MonthlyExpenses, {
-            where: {
-                month: month,
-                year: year
-            }
-        })
-        return monthlyExpenses;
-    }
-    
+export class MonthlyExpensesResolver {    
     /**
      * 
      * @param month the month for which you need the monthly expense
@@ -64,6 +43,7 @@ export class MonthlyExpensesResolver {
             year: year,
             totalSpent: totalSpent,
         })
-        return await db.manager.save(monthlyExpense);
+        await db.manager.save(monthlyExpense);
+        return monthlyExpense;
     }
 }
