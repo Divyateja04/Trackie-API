@@ -7,6 +7,7 @@ import { buildSchema } from "type-graphql";
 import { ExpenseResolver } from './resolvers/expense.resolver';
 import { SubjectResolver } from './resolvers/subject.resolver';
 import { MonthlyExpensesResolver } from './resolvers/monthlyexpenses.resolver';
+import { EvaluativeResolver } from './resolvers/evaluative.resolver';
 
 import { PORT } from './constants';
 
@@ -18,7 +19,7 @@ db.initialize()
 
         const apolloServer = new ApolloServer({
             schema: await buildSchema({
-                resolvers: [ExpenseResolver, SubjectResolver, MonthlyExpensesResolver],
+                resolvers: [ExpenseResolver, SubjectResolver, MonthlyExpensesResolver, EvaluativeResolver],
                 validate: false
             }),
             context: () => ({

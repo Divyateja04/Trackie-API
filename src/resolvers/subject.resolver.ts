@@ -20,21 +20,32 @@ export class SubjectResolver {
         @Arg("sem") sem: number,
         @Arg("credits") credits: number,
         @Ctx() { db }: Context
-    ): Promise<Subject | null> {
-        try {
-            const subject = db.manager.create(Subject, {
-                id: dept.toUpperCase() + " " + code,
+    ): Promise<Subject> {
+
+        const existingSubject = await db.manager.find(Subject, {
+            where: {
                 dept: dept,
-                code: code,
-                sem: sem,
-                credits: credits,
-                evals: []
-            });
-            await db.manager.save(subject);
-            return subject;
-        } catch(err) {
-            console.log(err);
-            return null;
+                code: code
+            },
+            relations: {
+                evals: true
+            }
+        })
+
+        if(existingSubject.length == 1){
+            return existingSubject[0];
         }
+
+        const subject = db.manager.create(Subject, {
+            id: dept.toUpperCase() + " " + code,
+            dept: dept,
+            code: code,
+            sem: sem,
+            credits: credits,
+            evals: []
+        });
+
+        await db.manager.save(subject);
+        return subject;
     }
 }
