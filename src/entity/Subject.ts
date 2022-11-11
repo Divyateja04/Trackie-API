@@ -19,7 +19,7 @@ export class Subject {
 
     @Field()
     @Column()
-    sem: number
+    sem: string
 
     @Field(() => [Evaluative])
     @OneToMany(() => Evaluative, evaluative => evaluative.subject, { nullable: true })

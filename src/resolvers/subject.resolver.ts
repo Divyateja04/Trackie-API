@@ -17,7 +17,7 @@ export class SubjectResolver {
     async addNewSubject(
         @Arg("dept") dept: string,
         @Arg("code") code: string,
-        @Arg("sem") sem: number,
+        @Arg("sem") sem: string,
         @Arg("credits") credits: number,
         @Ctx() { db }: Context
     ): Promise<Subject> {
