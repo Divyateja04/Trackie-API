@@ -23,10 +23,10 @@ export class MonthlyExpensesResolver {
                 year: year
             }
         })
+
         if(existingMonthlyExpenses.length == 1){
             return existingMonthlyExpenses[0];
         }
-
 
         const expenses: Expense[] = await db.manager.query(
             `SELECT * FROM expense WHERE EXTRACT(MONTH FROM expense.date) = $1 AND EXTRACT(YEAR FROM expense.date) = $2;`,

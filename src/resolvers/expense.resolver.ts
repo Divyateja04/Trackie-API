@@ -35,16 +35,13 @@ export class ExpenseResolver {
     async addNewExpense(
         @Arg("place") place: string,
         @Arg("itemName") itemName: string,
-        @Arg("price") price: number,
-        @Arg("quantity") quantity: number,
+        @Arg("totalPaid") totalPaid: number,
         @Ctx() { db }: Context,
     ): Promise<Expense> {
         const expense = db.manager.create(Expense, {
             place: place,
             itemName: itemName,
-            price: price,
-            quantity: quantity,
-            totalPaid: price * quantity,
+            totalPaid: totalPaid,
         });
         await db.manager.save(expense);
         return expense;

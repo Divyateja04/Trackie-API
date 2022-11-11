@@ -22,13 +22,5 @@ export class Expense extends BaseEntity {
 
     @Field()
     @Column()
-    price: number
-
-    @Field()
-    @Column({ default: 1 })
-    quantity: number    
-
-    @Field()
-    @Column()
     totalPaid: number
 }
