@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, Query, Resolver } from "type-graphql";
 import { Context } from "../types";
 import { MonthlyExpenses } from './../entity/MonthlyExpenses';
 import { Expense } from './../entity/Expense';
@@ -11,7 +11,7 @@ export class MonthlyExpensesResolver {
      * @param year the year for which you need the monthly expense
      * @returns the row containing the monthly expense details for a month
      */
-    @Mutation(() => MonthlyExpenses)
+    @Query(() => MonthlyExpenses)
     async generateMonthlyExpense(
         @Arg("month") month: number,
         @Arg("year") year: number,
