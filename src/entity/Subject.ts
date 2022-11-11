@@ -30,10 +30,10 @@ export class Subject {
     credits: number
 
     @Field()
-    @Column({ nullable: true })
+    @Column({ nullable: true, default: 0 })
     midsemGrade: number
 
     @Field()
-    @Column({ nullable: true })
+    @Column({ nullable: true, default: 0 })
     finalGrade: number
 }

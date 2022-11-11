@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { Context } from "../types";
 import { Subject } from '../entity/Subject';
 
@@ -47,5 +47,22 @@ export class SubjectResolver {
 
         await db.manager.save(subject);
         return subject;
+    }
+
+    @Query(() => [Subject])
+    async getSubjectsPerSem(
+        @Arg("sem") sem: string,
+        @Ctx() { db }: Context,
+    ) {
+        const subjects = await db.manager.find(Subject, {
+            where: {
+                sem: sem
+            },
+            relations: {
+                evals: true
+            }
+        })
+
+        return subjects;
     }
 }
