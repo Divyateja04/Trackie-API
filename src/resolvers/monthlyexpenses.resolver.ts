@@ -34,10 +34,13 @@ export class MonthlyExpensesResolver {
         )
 
         let totalSpent: number = 0;
+        console.log("HEllo World");
         for(let expense of expenses){
+            console.log(expense);
             totalSpent += expense.totalPaid;
         }
 
+        
         const monthlyExpense = db.manager.create(MonthlyExpenses, {
             month: month,
             year: year,

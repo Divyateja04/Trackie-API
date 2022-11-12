@@ -1,6 +1,7 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { Context } from "../types";
 import { Expense } from "../entity/Expense";
+import { MonthlyExpenses } from "../entity/MonthlyExpenses";
 
 @Resolver()
 export class ExpenseResolver {
@@ -38,11 +39,25 @@ export class ExpenseResolver {
         @Arg("totalPaid") totalPaid: number,
         @Ctx() { db }: Context,
     ): Promise<Expense> {
+
         const expense = db.manager.create(Expense, {
             place: place,
             itemName: itemName,
             totalPaid: totalPaid,
         });
+
+        const existingMonthlyExpenses = await db.manager.find(MonthlyExpenses, {
+            where: {
+                month: new Date().getMonth() + 1,
+                year: new Date().getFullYear()
+            }
+        })
+
+        if(existingMonthlyExpenses.length == 1){
+            existingMonthlyExpenses[0].totalSpent += totalPaid;
+            await db.manager.save(existingMonthlyExpenses[0]);
+        }
+        
         await db.manager.save(expense);
         return expense;
     }
