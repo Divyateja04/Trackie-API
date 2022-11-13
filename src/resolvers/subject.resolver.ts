@@ -5,10 +5,10 @@ import { Subject } from '../entity/Subject';
 @ObjectType()
 export class SGPAReturn {
     @Field()
-    midsemGrade!: number
+    midsemSG!: number
 
     @Field()
-    finalGrade!: number
+    finalSG!: number
 }
 
 @Resolver()
@@ -43,6 +43,8 @@ export class SubjectResolver {
             }
         })
 
+        console.log(existingSubject[0]);
+
         if(existingSubject.length == 1){
             if(existingSubject[0].sem != sem) throw Error("Cannot overlap subjects in different semesters");
         }
@@ -59,6 +61,7 @@ export class SubjectResolver {
         });
 
         await db.manager.save(subject);
+
         return subject;
     }
 
@@ -101,8 +104,8 @@ export class SubjectResolver {
         })
 
         return {
-            midsemGrade: totalMidCredGrade/credits,
-            finalGrade: totalFinalCredGrade/credits
+            midsemSG: totalMidCredGrade/credits,
+            finalSG: totalFinalCredGrade/credits
         }
     }
 }
