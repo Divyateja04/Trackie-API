@@ -93,6 +93,13 @@ export class SubjectResolver {
             }
         })
 
+        if(subjects.length == 0){
+            return {
+                midsemSG: 0,
+                finalSG: 0,
+            }
+        }
+
         let credits: number = 0;
         let totalMidCredGrade: number = 0;
         let totalFinalCredGrade: number = 0;
