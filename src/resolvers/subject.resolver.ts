@@ -65,6 +65,31 @@ export class SubjectResolver {
         return subject;
     }
 
+    /**
+     * 
+     * @param dept department
+     * @param code code
+     * @returns true if deletion is successfully else false
+     */
+    @Mutation(() => Boolean)
+    async deleteSubject(
+        @Arg("dept") dept: string,
+        @Arg("code") code: string,
+        @Ctx()  { db }: Context
+    ): Promise<Boolean> {
+        try{
+            await db.manager.delete(Subject, { dept: dept, code: code });
+            return true
+        }catch(e){
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param sem semester
+     * @returns 
+     */
     @Query(() => [Subject])
     async getSubjectsPerSem(
         @Arg("sem") sem: string,
