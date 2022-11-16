@@ -107,6 +107,35 @@ export class SubjectResolver {
         return subjects;
     }
 
+    @Query(() => [Subject])
+    async getAllSubjects(
+        @Ctx() { db }: Context,
+    ) {
+        const subjects = await db.manager.find(Subject, {
+            relations: {
+                evals: true
+            }
+        })
+        return subjects;
+    }
+
+    @Query(() => Number)
+    async getCGPA(
+        @Ctx() { db }: Context,
+    ){
+        const subjects = await db.manager.find(Subject);
+
+        if(subjects.length == 0) return 0;
+
+        let cg: number = 0;
+
+        subjects.forEach(subject => {
+            cg += subject.finalGrade / subject.credits;
+        })
+
+        return cg;
+    }
+
     @Query(() => SGPAReturn)
     async getSGPA(
         @Arg("sem") sem: string,
